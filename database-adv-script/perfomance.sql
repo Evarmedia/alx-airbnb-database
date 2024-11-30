@@ -1,28 +1,26 @@
--- Comprehensive Booking Query with User, Property, and Payment Details
+
+-- Retrieve all bookings with user, property, and payment details
 SELECT 
     b.booking_id,
     b.start_date,
     b.end_date,
-    b.total_price AS booking_total_price,
-    b.status AS booking_status,
+    b.total_price,
+    b.status,
     
     u.user_id,
     u.first_name,
     u.last_name,
     u.email,
-    u.role AS user_role,
     
     p.property_id,
     p.name AS property_name,
     p.location,
     p.price_per_night,
-    p.host_id,
     
     pm.payment_id,
     pm.amount AS payment_amount,
     pm.payment_method,
-    pm.payment_status,
-    pm.payment_date
+    pm.payment_status
 FROM 
     Booking b
 JOIN 
@@ -30,10 +28,8 @@ JOIN
 JOIN 
     Property p ON b.property_id = p.property_id
 LEFT JOIN 
-    Payment pm ON b.booking_id = pm.booking_id
-ORDER BY 
-    b.start_date DESC;
-    
+    Payment pm ON b.booking_id = pm.booking_id;
+
 -- Performance Analysis
 EXPLAIN SELECT 
     b.booking_id,
