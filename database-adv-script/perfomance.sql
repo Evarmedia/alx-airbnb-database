@@ -1,6 +1,4 @@
--- Complex Booking Query with Performance Considerations
-
--- Initial Complex Query with Multiple Joins
+-- Comprehensive Booking Query with User, Property, and Payment Details
 SELECT 
     b.booking_id,
     b.start_date,
@@ -12,16 +10,19 @@ SELECT
     u.first_name,
     u.last_name,
     u.email,
+    u.role AS user_role,
     
     p.property_id,
     p.name AS property_name,
     p.location,
     p.price_per_night,
+    p.host_id,
     
     pm.payment_id,
     pm.amount AS payment_amount,
     pm.payment_method,
-    pm.payment_status
+    pm.payment_status,
+    pm.payment_date
 FROM 
     Booking b
 JOIN 
@@ -30,47 +31,8 @@ JOIN
     Property p ON b.property_id = p.property_id
 LEFT JOIN 
     Payment pm ON b.booking_id = pm.booking_id
-WHERE 
-    b.status = 'confirmed'
 ORDER BY 
-    b.start_date DESC
-LIMIT 1000;
-
--- Performance Analysis
-EXPLAIN SELECT 
-    b.booking_id,
-    b.start_date,
-    b.end_date,
-    b.total_price AS booking_total_price,
-    b.status AS booking_status,
-    
-    u.user_id,
-    u.first_name,
-    u.last_name,
-    u.email,
-    
-    p.property_id,
-    p.name AS property_name,
-    p.location,
-    p.price_per_night,
-    
-    pm.payment_id,
-    pm.amount AS payment_amount,
-    pm.payment_method,
-    pm.payment_status
-FROM 
-    Booking b
-JOIN 
-    User u ON b.user_id = u.user_id
-JOIN 
-    Property p ON b.property_id = p.property_id
-LEFT JOIN 
-    Payment pm ON b.booking_id = pm.booking_id
-WHERE 
-    b.status = 'confirmed'
-ORDER BY 
-    b.start_date DESC
-LIMIT 1000;
+    b.start_date DESC;
 
 -- Optimized Query with Subquery and Indexing Strategy
 WITH ConfirmedBookings AS (
