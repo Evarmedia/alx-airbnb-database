@@ -27,13 +27,3 @@ SELECT b.booking_id, b.start_date, u.first_name, u.last_name
 FROM Booking b
 JOIN User u ON b.user_id = u.user_id
 WHERE u.email = 'example@email.com';
-
--- Performance Analysis Queries
-
--- Before Index: Analyze Query Performance
-EXPLAIN SELECT * FROM Booking 
-WHERE user_id = 'some_user_id' AND status = 'confirmed';
-
--- After Index: Performance Check
-EXPLAIN SELECT * FROM Booking 
-WHERE user_id = 'some_user_id' AND status = 'confirmed';
