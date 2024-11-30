@@ -21,7 +21,9 @@ CREATE INDEX idx_booking_user_status ON Booking(user_id, status);
 CREATE INDEX idx_property_location_price ON Property(location, price_per_night);
 
 -- Measure Query Performance Using EXPLAIN or ANALYZE
-EXPLAIN SELECT b.booking_id, b.start_date, u.first_name, u.last_name 
+-- Measure performance before indexes (EXPLAIN ANALYZE)
+EXPLAIN ANALYZE 
+SELECT b.booking_id, b.start_date, u.first_name, u.last_name 
 FROM Booking b
 JOIN User u ON b.user_id = u.user_id
 WHERE u.email = 'example@email.com';
